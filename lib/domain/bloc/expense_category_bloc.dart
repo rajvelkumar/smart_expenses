@@ -23,9 +23,9 @@ class ExpenseCategoryBloc {
     Map data = {'FromDate': '2021-06-09', 'ToDate': '2022-06-10'};
     categoryDataSink.add(Response.loading('Getting Categories'));
     try {
-      ResponseInfo responseData =
-          await _expenseCategoryRepository.fetchCategories(data);
-      categoryDataSink.add(Response.completed(responseData));
+     /* ResponseInfo responseData =
+          await _expenseCategoryRepository.fetchCategories(data);*/
+     // categoryDataSink.add(Response.completed(responseData));
     } catch (e) {
       categoryDataSink.add(Response.error(e.toString()));
       print(e);

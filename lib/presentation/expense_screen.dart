@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_expenses/domain/bloc/category_bloc.dart';
 
 import 'category_view.dart';
 import 'expense_infographics.dart';
@@ -18,7 +20,13 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
         backgroundColor: Colors.black12,
         body: SingleChildScrollView(
             child: Column(
-          children: [ExpensesChart(), CategoryScreen()],
+          children: [
+            const ExpensesChart(),
+            BlocProvider<CategoryCubit>(
+              create: (context) => CategoryCubit(),
+              child: CategoryScreen(),
+            )
+          ],
         )));
   }
 }

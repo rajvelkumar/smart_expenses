@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_expenses/data/model/response.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_expenses/data/model/response_data.dart';
-import 'package:smart_expenses/data/model/response_info.dart';
+import 'package:smart_expenses/domain/bloc/category_bloc.dart';
 import 'package:smart_expenses/domain/bloc/expense_category_bloc.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -22,7 +22,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     _bloc.fetchCategoryExpenses();
   }
 
-  @override
+  /*@override
   Widget build(BuildContext context) {
     return Container(
       child: StreamBuilder<Response<ResponseInfo>>(
@@ -46,6 +46,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
         },
       ),
     );
+  }*/
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: BlocBuilder<CategoryCubit, List<ResponseData>>(
+      builder: (context, categories) {
+        return CategoryView(
+          categories: categories,
+          subCategoryBloc: _bloc,
+        );
+      return Container();
+      },
+    ));
   }
 }
 
@@ -86,8 +100,7 @@ class CategoryView extends StatelessWidget {
                     ),
                     Expanded(
                       child: ListView.separated(
-                        separatorBuilder: (context, index) =>
-                        const Divider(
+                        separatorBuilder: (context, index) => const Divider(
                           color: Colors.grey,
                         ),
                         itemCount: categories.length,
@@ -97,13 +110,15 @@ class CategoryView extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    Align(alignment: Alignment.bottomLeft, child: Text(
-                      "view all categories",
-                      style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontSize: 20,
-                          color: Colors.black26),
-                    )),
+                    Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Text(
+                          "view all categories",
+                          style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontSize: 20,
+                              color: Colors.black26),
+                        )),
                     const SizedBox(
                       height: 10,
                     ),
@@ -124,11 +139,11 @@ class CategoryView extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-            /*  CircleAvatar(
+              /*  CircleAvatar(
                 radius: 16,
                 backgroundImage: NetworkImage(''),
               ),*/
-            Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
